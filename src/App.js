@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+//router-dom imports
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
+
+//layout imports
+import RootLayout, { rootLoader, setUserPreference } from "./layouts/root-layout";
+
+//pages imports
+import DisplayCards, { displayCardsLoader } from "./pages/display-cards";
+
+//layout styles
+import "./App.css";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout/>} loader={rootLoader} action={setUserPreference} error={<h1>Error in Root</h1>}>
+      <Route index element={<DisplayCards/>} loader={displayCardsLoader}/>
+    </Route>
+  )
+)
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={router}/>
   );
 }
 
